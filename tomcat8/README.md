@@ -10,3 +10,5 @@ docker run -it -d --restart=always -p 8084:8084 -e Xms=Xms4096m -e Xmx=Xmx4096m 
 1.Not support tomcat-native<br>
 2.Tomcat thread pool not optimized
 
+### See links
+http://www.cnblogs.com/yangxiaoyi/p/8026863.html

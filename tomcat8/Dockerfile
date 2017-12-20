@@ -46,7 +46,8 @@ RUN ALPINE_GLIBC_BASE_URL="https://github.com/sgerrand/alpine-pkg-glibc/releases
         "$ALPINE_GLIBC_BASE_PACKAGE_FILENAME" \
         "$ALPINE_GLIBC_BIN_PACKAGE_FILENAME" \
         "$ALPINE_GLIBC_I18N_PACKAGE_FILENAME" \
-    && apk add --no-cache  --virtual .fetch-deps ca-certificates coreutils bash tar wget unzip \
+    && apk add --no-cache  --virtual .fetch-deps ca-certificates coreutils bash tar wget unzip tzdata \
+    && cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
     && mkdir -p ${JAVA_HOME} ${TOMCAT_HOME} \
     && wget -P /tmp --no-cookies --no-check-certificate --header "Cookie:oraclelicense=accept-securebackup-cookie" ${JAVA_DOWNLOAD_URL} \
     && wget -P /tmp http://archive.apache.org/dist/tomcat/tomcat-${TOMCAT_MAJOR}/v${TOMCAT_VERSION}/bin/apache-tomcat-${TOMCAT_VERSION}.tar.gz \

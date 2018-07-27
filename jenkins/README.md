@@ -11,3 +11,7 @@
 ```
 docker build -t jenkins-slave-mvn:v1
 ```
+或
+```
+docker pull hexun/jnlp-slave-maven:apline
+```

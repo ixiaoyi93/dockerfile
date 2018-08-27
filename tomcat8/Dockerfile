@@ -1,30 +1,28 @@
-FROM alpine:3.7 
+FROM alpine:3.7
 
 MAINTAINER https://github.com/XiaoMuYi
 
 # 定义jdk相关信息
 ARG JAVA_VERSION=8
-ARG JAVA_UPDATE=151
-ARG JAVA_BUILD=12
+ARG JAVA_UPDATE=181
+ARG JAVA_BUILD=13
 ARG JAVA_HOME=/usr/local/java
-ARG JAVA_DOWNLOAD_URL=http://download.oracle.com/otn-pub/java/jdk/${JAVA_VERSION}u${JAVA_UPDATE}-b${JAVA_BUILD}/e758a0de34e24606bca991d704f6dcbf/server-jre-${JAVA_VERSION}u${JAVA_UPDATE}-linux-x64.tar.gz
+ARG JAVA_DOWNLOAD_URL=http://download.oracle.com/otn-pub/java/jdk/${JAVA_VERSION}u${JAVA_UPDATE}-b${JAVA_BUILD}/96a7b8442fe848ef90c96a2fad6ed6d1/server-jre-${JAVA_VERSION}u${JAVA_UPDATE}-linux-x64.tar.gz
 
 # 指定tomcat版本
 ARG TOMCAT_MAJOR=8
-ARG TOMCAT_VERSION=8.0.47
+ARG TOMCAT_VERSION=8.0.33
 ARG TOMCAT_HOME=/usr/local/tomcat
 
 ENV LANG=C.UTF-8
 
 RUN ALPINE_GLIBC_BASE_URL="https://github.com/sgerrand/alpine-pkg-glibc/releases/download" && \
-    ALPINE_GLIBC_PACKAGE_VERSION="2.26-r0" && \
+    ALPINE_GLIBC_PACKAGE_VERSION="2.28-r0" && \
     ALPINE_GLIBC_BASE_PACKAGE_FILENAME="glibc-$ALPINE_GLIBC_PACKAGE_VERSION.apk" && \
     ALPINE_GLIBC_BIN_PACKAGE_FILENAME="glibc-bin-$ALPINE_GLIBC_PACKAGE_VERSION.apk" && \
     ALPINE_GLIBC_I18N_PACKAGE_FILENAME="glibc-i18n-$ALPINE_GLIBC_PACKAGE_VERSION.apk" && \
     apk add --no-cache --virtual=.build-dependencies wget ca-certificates && \
-    wget \
-        "https://raw.githubusercontent.com/andyshinn/alpine-pkg-glibc/master/sgerrand.rsa.pub" \
-        -O "/etc/apk/keys/sgerrand.rsa.pub" && \
+    wget -q -O /etc/apk/keys/sgerrand.rsa.pub https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub && \
     wget \
         "$ALPINE_GLIBC_BASE_URL/$ALPINE_GLIBC_PACKAGE_VERSION/$ALPINE_GLIBC_BASE_PACKAGE_FILENAME" \
         "$ALPINE_GLIBC_BASE_URL/$ALPINE_GLIBC_PACKAGE_VERSION/$ALPINE_GLIBC_BIN_PACKAGE_FILENAME" \

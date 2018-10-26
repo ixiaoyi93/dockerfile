@@ -13,8 +13,6 @@ ENV JAVA_VERSION_MAJOR=8 \
     GLIBC_VERSION=2.28-r0 \
     PATH=${PATH}:/usr/local/java/bin
 
-COPY ./selectCar.crt /tmp
-
 RUN set -ex && \
     apk add libstdc++ ca-certificates shadow curl bash java-cacerts unzip tzdata && \
     curl -o /etc/apk/keys/sgerrand.rsa.pub https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub && \
@@ -33,7 +31,6 @@ RUN set -ex && \
     unzip jce_policy-${JAVA_VERSION_MAJOR}.zip && \
     cp -v UnlimitedJCEPolicyJDK8/*.jar ${JAVA_HOME}/jre/lib/security/ && \
     cd /usr/local/java && ln -s ./jre/bin ./bin && \
-    echo 'yes' | ${JAVA_HOME}/bin/keytool -import -v -trustcacerts -alias cnode-ch.yongche.com -keystore ${JAVA_HOME}/jre/lib/security/cacerts -file /tmp/selectCar.crt -storepass changeit && \
     sed -i s/#networkaddress.cache.ttl=-1/networkaddress.cache.ttl=10/ ${JAVA_HOME}/jre/lib/security/java.security && \
     ln -sf /etc/ssl/certs/java/cacerts ${JAVA_HOME}/jre/lib/security/cacerts && \
     echo 'hosts: files mdns4_minimal [NOTFOUND=return] dns mdns4' >> /etc/nsswitch.conf && \
